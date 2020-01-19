@@ -1,0 +1,20 @@
+{
+  "name": "leyou-protal",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server": "live-server ./ --port=9002"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qaz942956627/leyou-protal.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/qaz942956627/leyou-protal/issues"
+  },
+  "homepage": "https://github.com/qaz942956627/leyou-protal#readme"
+}
