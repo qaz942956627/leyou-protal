@@ -54,12 +54,12 @@
         .top-pagination span {
             margin-right: 10px;
         }
-/*        .logo-list li{
+        .logo-list li{
             padding:8px;
         }
        .logo-list li:hover{
             background-color: #f3f3f3;
-        }*/
+        }
         .type-list a:hover{
             color: #1299ec;
         }
@@ -118,26 +118,23 @@
         </div>
         <!--selector-->
         <div class="clearfix selector">
-            <div class="type-wrap">
-                <div class="fl key">分类</div>
+            <div class="type-wrap" v-for="(filter,index) in filters" :key="index" v-if="filter.key != '品牌'">
+                <div class="fl key">{{filter.key}}</div>
                 <div class="fl value">
                     <ul class="type-list">
-                        <li>
-                            <a>手机</a>
-                        </li>
-                        <li>
-                            <a>儿童手表</a>
+                        <li v-for="(option,j) in filter.options" :key="j">
+                            <a>{{option.name}}</a>
                         </li>
                     </ul>
                 </div>
                 <div class="fl ext"></div>
             </div>
-            <div class="type-wrap logo">
-                <div class="fl key brand">品牌</div>
+            <div class="type-wrap logo" v-else>
+                <div class="fl key brand">{{filter.key}}</div>
                 <div class="value logos">
                     <ul class="logo-list">
-                        <li><img src="img/_/phone01.png" /></li>
-                        <li><img src="img/_/phone02.png" /></li>
+                        <li v-for="(option,j) in filter.options" :key="j"><img :src="option.image" /></li>
+                        <!--<li><img src="img/_/phone02.png" /></li>
                         <li><img src="img/_/phone03.png" /></li>
                         <li><img src="img/_/phone04.png" /></li>
                         <li><img src="img/_/phone05.png" /></li>
@@ -152,15 +149,15 @@
                         <li><img src="img/_/phone14.png" /></li>
                         <li><img src="img/_/phone05.png" /></li>
                         <li><img src="img/_/phone06.png" /></li>
-                        <li><img src="img/_/phone07.png" /></li>
-                        <li style="text-align: center"><a style="line-height: 30px; font-size: 12px" href="#">黑马</a></li>
+                        <li><img src="img/_/phone07.png" /></li>-->
+                        <li style="text-align: center" v-else><a style="line-height: 30px; font-size: 12px" href="#">{{option.name}}</a></li>
                     </ul>
                 </div>
                 <div class="fl ext">
                     <a href="javascript:void(0);" class="sui-btn">多选</a>
                 </div>
             </div>
-            <div class="type-wrap">
+            <!--<div class="type-wrap">
                 <div class="fl key">网络制式</div>
                 <div class="fl value">
                     <ul class="type-list">
@@ -261,7 +258,7 @@
                 </div>
                 <div class="fl ext">
                 </div>
-            </div>
+            </div>-->
             <div class="type-wrap" style="text-align: center">
                 <v-btn small flat>
                     更多<v-icon>arrow_drop_down</v-icon>
@@ -766,7 +763,8 @@
             },
             goodsList: [],
             totalPage: 1,
-            total: 1
+            total: 1,
+            filters:[]
         },
         created() {
             if (!location.search) {
@@ -806,6 +804,14 @@
                     this.goodsList = data.items;
                     this.totalPage = data.totalPage;
                     this.total = data.total;
+                    this.filters.push({
+                        key: "分类",
+                        options: data.categories
+                    });
+                    this.filters.push({
+                        key: "品牌",
+                        options: data.brands
+                    });
                 }).catch(() => {
                     console.log("查询报错");
                 })
